@@ -75,3 +75,56 @@ for (let i = 0; i < len - 1; i++) {
 }
 return [swap, compare];
 }
+
+export function selectionSort(arr) {
+  const n = arr.length;
+  let animSelection = []
+
+  for (let i = 0; i < n; i++) {
+    let minIndex = i;
+
+    // Find the index of the minimum element in the remaining unsorted portion
+    for (let j = i + 1; j < n; j++) {
+      if (arr[j] < arr[minIndex]) {
+        minIndex = j;
+      }
+    }
+
+    // Swap the minimum element with the current element (if they are different)
+    if (minIndex !== i) {
+      const temp = arr[i];
+      arr[i] = arr[minIndex];
+      arr[minIndex] = temp;
+      animSelection.push([i, minIndex])
+    }
+  }
+  return animSelection
+}
+
+export function insertionSort(arr) {
+  const n = arr.length;
+  let animInsertion = []
+
+  for (let i = 1; i < n; i++) {
+    const key = arr[i];
+    let j = i - 1;
+
+    // Move elements of arr[0..i-1] that are greater than key
+    // to one position ahead of their current position
+    while (j >= 0 && arr[j] > key) {
+      arr[j + 1] = arr[j];
+      if(j == 0){
+        animInsertion.push([(j + 1),j])
+      }
+      j--;
+      if(j>0){
+        animInsertion.push([(j + 1),j])
+      }
+    }
+
+    arr[j + 1] = key;
+    animInsertion.push([(j + 1), i])
+
+  }
+  return animInsertion
+}

@@ -27,12 +27,60 @@ export default class SortingVisualizer extends React.Component {
         //for (let i = 0; i < 400; i++){
         //    array.push(randomIntFromInterval(5, 730));
         //}
-        for (let i = 0; i < 400; i++) {
+        for (let i = 0; i < 100; i++) {
             array.push(i)
         }
         this.shuffleArray(array);
         this.setState({array});
         return;
+    }
+
+    insertionSort(){
+        let results = [];
+        let bars = [];
+        results = algo.insertionSort(this.state.array)
+        bars = document.getElementsByClassName("sortingVisualizer_arrayBar__Yomyf")
+
+        for (let i = 0; i < results.length; i++) {
+            console.log(results[i][1])
+            setTimeout(() => {
+                bars[results[i][0]].style.backgroundColor = "red";
+                bars[results[i][1]].style.backgroundColor = "red";
+            }, i*10);
+
+            setTimeout(() => {
+                bars[results[i][0]].style.height = bars[results[i][1]].style.height
+
+                bars[results[i][0]].style.backgroundColor = "blue";
+                bars[results[i][1]].style.backgroundColor = "blue";
+               
+            }, (i+1)*10);
+        }
+    }
+
+    selectionSort(){
+        let results = [];
+        let temp = 0;
+        let bars = [];
+        results = algo.selectionSort(this.state.array)
+        bars = document.getElementsByClassName("sortingVisualizer_arrayBar__Yomyf")
+
+        for (let i = 0; i < results.length; i++) {
+            setTimeout(() => {
+                bars[results[i][0]].style.backgroundColor = "red";
+                bars[results[i][1]].style.backgroundColor = "red";
+            }, i*50);
+
+            setTimeout(() => {
+                temp = bars[results[i][0]].style.height
+                bars[results[i][0]].style.height = bars[results[i][1]].style.height
+                bars[results[i][1]].style.height = temp
+
+                bars[results[i][0]].style.backgroundColor = "blue";
+                bars[results[i][1]].style.backgroundColor = "blue";
+               
+            }, (i+1)*50);
+        }
     }
 
     quickSort(){
@@ -43,17 +91,23 @@ export default class SortingVisualizer extends React.Component {
         bars = document.getElementsByClassName("sortingVisualizer_arrayBar__Yomyf")
         
         for (let i = 0; i < results.length; i++) {
-            setTimeout(() => {
                if(results[i][0]==results[i][1]){
                 console.log("do nothing")
                }
                else{
-                temp = bars[results[i][0]].style.height
-                bars[results[i][0]].style.height = bars[results[i][1]].style.height
-                bars[results[i][1]].style.height = temp
-               }
-               
-            }, i*10);
+                    setTimeout(() => {
+                        bars[results[i][0]].style.backgroundColor = "red";
+                        bars[results[i][1]].style.backgroundColor = "red";
+                    }, i*50);
+                    setTimeout(() => {
+                        temp = bars[results[i][0]].style.height
+                        bars[results[i][0]].style.height = bars[results[i][1]].style.height
+                        bars[results[i][1]].style.height = temp
+
+                        bars[results[i][0]].style.backgroundColor = "blue";
+                        bars[results[i][1]].style.backgroundColor = "blue";
+                    }, (i+1)*50);
+                }  
         }
     }
 
@@ -112,6 +166,8 @@ export default class SortingVisualizer extends React.Component {
                 ))}
                 <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
                 <button onClick={() => this.quickSort()}>Quick Sort (not recursive)</button>
+                <button onClick={() => this.selectionSort()}>Selection Sort</button>
+                <button onClick={() => this.insertionSort()}>Insertion Sort</button>
             </div>
       );
     }
