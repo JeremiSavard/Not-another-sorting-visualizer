@@ -11,6 +11,7 @@ export default class SortingVisualizer extends React.Component {
         };
     }
 
+
     componentDidMount() {
         this.resetArray();
     }
@@ -22,7 +23,13 @@ export default class SortingVisualizer extends React.Component {
         }
     }
 
+    reset(){
+        window.location.reload(false);
+        this.resetArray();
+    }
+
     resetArray(){
+        console.log("resetArray")
         const array = [];
         //for (let i = 0; i < 400; i++){
         //    array.push(randomIntFromInterval(5, 730));
@@ -53,7 +60,7 @@ export default class SortingVisualizer extends React.Component {
 
                 bars[results[i][0]].style.backgroundColor = "blue";
                 bars[results[i][1]].style.backgroundColor = "blue";
-               
+            
             }, (i+1)*10);
         }
     }
@@ -168,6 +175,7 @@ export default class SortingVisualizer extends React.Component {
                 <button onClick={() => this.quickSort()}>Quick Sort (not recursive)</button>
                 <button onClick={() => this.selectionSort()}>Selection Sort</button>
                 <button onClick={() => this.insertionSort()}>Insertion Sort</button>
+                <button onClick={() => this.reset()}>Reset</button>
             </div>
       );
     }
