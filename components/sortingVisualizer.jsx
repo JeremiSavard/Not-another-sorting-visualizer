@@ -43,28 +43,7 @@ export default class SortingVisualizer extends React.Component {
         return;
     }
 
-    callSortingAlgo(type){
-    this.setState({ disabled: true });
-    switch(type) {
-        case 1:
-            bubbleSort(this.state.array)
-            break;
-        case 2:
-            quickSort(this.state.array)
-            break;
-        case 3:
-            selectionSort(this.state.array)
-            break;
-        case 4:
-            insertionSort(this.state.array)
-            break;
-        default:
-            console.log("Sorting algo not found")
-        } 
-    }
-
     bubbleSort(){
-        console.log(this.state.array)
         let results = [];
         let bars = [];
         results = algo.bubbleSort(this.state.array)
@@ -84,19 +63,28 @@ export default class SortingVisualizer extends React.Component {
         bars = document.getElementsByClassName("sortingVisualizer_arrayBar__Yomyf")
     
         for (let i = 0; i < results.length; i++) {
-            console.log(results[i][1])
             setTimeout(() => {
-                bars[results[i][0]].style.backgroundColor = "red";
-                bars[results[i][1]].style.backgroundColor = "red";
-            }, i*3);
+                if(results[i][2] == 0){
+                    bars[results[i][0]].style.backgroundColor = "red";
+                    bars[results[i][1]].style.backgroundColor = "red";
+                }
+                
+            }, i*10);
     
             setTimeout(() => {
-                bars[results[i][0]].style.height = bars[results[i][1]].style.height
-    
-                bars[results[i][0]].style.backgroundColor = "blue";
-                bars[results[i][1]].style.backgroundColor = "blue";
-            
-            }, (i+1)*3);
+                if(results[i][2] == 0){
+                    bars[results[i][0]].style.height = bars[results[i][1]].style.height
+                    console.log(results[i][0])
+                }
+                else if(results[i][2] == 1){
+                    bars[results[i][0]].style.height = (results[i][1]+"px")
+                }
+
+                if(results[i][2] == 0){
+                    bars[results[i][0]].style.backgroundColor = "blue";
+                    bars[results[i][1]].style.backgroundColor = "blue";
+                }
+            }, (i)*10);
         }
     }
 
@@ -204,7 +192,7 @@ function compare(results, bars, i){
     setTimeout(() => {
         bars[results[1][i][0]].style.backgroundColor = "red";
         bars[results[1][i][1]].style.backgroundColor = "red";
-    }, i*3);
+    }, i*10);
 }
 
 function swap(results, bars, i){
@@ -225,5 +213,5 @@ function swap(results, bars, i){
             bars[results[1][i][0]].style.backgroundColor = "blue";
             bars[results[1][i][1]].style.backgroundColor = "blue";
         }
-    }, (i+1)*3);
+    }, (i+1)*10);
 }

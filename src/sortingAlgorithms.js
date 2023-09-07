@@ -113,17 +113,15 @@ export function insertionSort(arr) {
     // to one position ahead of their current position
     while (j >= 0 && arr[j] > key) {
       arr[j + 1] = arr[j];
-      if(j == 0){
-        animInsertion.push([(j + 1),j])
+      if(j >= 0){
+        animInsertion.push([(j + 1),j,0])
       }
       j--;
-      if(j>0){
-        animInsertion.push([(j + 1),j])
-      }
+
     }
 
     arr[j + 1] = key;
-    animInsertion.push([(j + 1), i])
+    animInsertion.push([(j + 1), key,1])
 
   }
   return animInsertion
