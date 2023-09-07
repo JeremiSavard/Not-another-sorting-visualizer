@@ -1,6 +1,11 @@
 import React from 'react';
+import Button from '@mui/material/Button';
+import Slider from '@mui/material/Slider';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import styles from './sortingVisualizer.module.css';
 import * as algo from '../src/sortingAlgorithms.js';
+
 
 export default class SortingVisualizer extends React.Component {
 
@@ -8,19 +13,14 @@ export default class SortingVisualizer extends React.Component {
         super(props);
         this.state = { 
             array: [],
+            numberBars: 100,
+            disabled: false
         };
     }
 
 
     componentDidMount() {
-        this.resetArray();
-    }
-
-    shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
+        this.resetArray()
     }
 
     reset(){
@@ -28,18 +28,53 @@ export default class SortingVisualizer extends React.Component {
         this.resetArray();
     }
 
+    handleChange = (event, newValue) => {
+        this.setState({ numberBars: newValue });
+        this.resetArray();
+      };
+
     resetArray(){
-        console.log("resetArray")
+        console.log(this.state.numberBars)
         const array = [];
-        //for (let i = 0; i < 400; i++){
-        //    array.push(randomIntFromInterval(5, 730));
-        //}
-        for (let i = 0; i < 100; i++) {
-            array.push(i)
+        for (let i = 0; i < this.state.numberBars; i++){
+            array.push(randomIntFromInterval(5, 600));
         }
-        this.shuffleArray(array);
-        this.setState({array});
+        this.setState({array: array});
         return;
+    }
+
+    callSortingAlgo(type){
+    this.setState({ disabled: true });
+    switch(type) {
+        case 1:
+            bubbleSort(this.state.array)
+            break;
+        case 2:
+            quickSort(this.state.array)
+            break;
+        case 3:
+            selectionSort(this.state.array)
+            break;
+        case 4:
+            insertionSort(this.state.array)
+            break;
+        default:
+            console.log("Sorting algo not found")
+        } 
+    }
+
+    bubbleSort(){
+        console.log(this.state.array)
+        let results = [];
+        let bars = [];
+        results = algo.bubbleSort(this.state.array)
+        bars = document.getElementsByClassName("sortingVisualizer_arrayBar__Yomyf")
+    
+        for (let i = 0; i < results[0].length; i++) {
+            compare(results, bars, i);
+            swap(results, bars, i);
+        }
+    
     }
 
     insertionSort(){
@@ -47,21 +82,21 @@ export default class SortingVisualizer extends React.Component {
         let bars = [];
         results = algo.insertionSort(this.state.array)
         bars = document.getElementsByClassName("sortingVisualizer_arrayBar__Yomyf")
-
+    
         for (let i = 0; i < results.length; i++) {
             console.log(results[i][1])
             setTimeout(() => {
                 bars[results[i][0]].style.backgroundColor = "red";
                 bars[results[i][1]].style.backgroundColor = "red";
-            }, i*10);
-
+            }, i*3);
+    
             setTimeout(() => {
                 bars[results[i][0]].style.height = bars[results[i][1]].style.height
-
+    
                 bars[results[i][0]].style.backgroundColor = "blue";
                 bars[results[i][1]].style.backgroundColor = "blue";
             
-            }, (i+1)*10);
+            }, (i+1)*3);
         }
     }
 
@@ -71,22 +106,22 @@ export default class SortingVisualizer extends React.Component {
         let bars = [];
         results = algo.selectionSort(this.state.array)
         bars = document.getElementsByClassName("sortingVisualizer_arrayBar__Yomyf")
-
+    
         for (let i = 0; i < results.length; i++) {
             setTimeout(() => {
                 bars[results[i][0]].style.backgroundColor = "red";
                 bars[results[i][1]].style.backgroundColor = "red";
-            }, i*50);
-
+            }, i*10);
+    
             setTimeout(() => {
                 temp = bars[results[i][0]].style.height
                 bars[results[i][0]].style.height = bars[results[i][1]].style.height
                 bars[results[i][1]].style.height = temp
-
+    
                 bars[results[i][0]].style.backgroundColor = "blue";
                 bars[results[i][1]].style.backgroundColor = "blue";
                
-            }, (i+1)*50);
+            }, (i+1)*10);
         }
     }
 
@@ -105,77 +140,57 @@ export default class SortingVisualizer extends React.Component {
                     setTimeout(() => {
                         bars[results[i][0]].style.backgroundColor = "red";
                         bars[results[i][1]].style.backgroundColor = "red";
-                    }, i*50);
+                    }, i*10);
                     setTimeout(() => {
                         temp = bars[results[i][0]].style.height
                         bars[results[i][0]].style.height = bars[results[i][1]].style.height
                         bars[results[i][1]].style.height = temp
-
+    
                         bars[results[i][0]].style.backgroundColor = "blue";
                         bars[results[i][1]].style.backgroundColor = "blue";
-                    }, (i+1)*50);
+                    }, (i+1)*10);
                 }  
         }
     }
 
-    bubbleSort(){
-        let results = [];
-        let bars = [];
-        results = algo.bubbleSort(this.state.array)
-        bars = document.getElementsByClassName("sortingVisualizer_arrayBar__Yomyf")
-
-        for (let i = 0; i < results[0].length; i++) {
-            this.compare(results, bars, i);
-            this.swap(results, bars, i);
-        }
-
-    }
-
-    compare(results, bars, i){
-        setTimeout(() => {
-            bars[results[1][i][0]].style.backgroundColor = "red";
-            bars[results[1][i][1]].style.backgroundColor = "red";
-        }, i*10);
-    }
-
-    swap(results, bars, i){
-        let temp = 0;
-        setTimeout(() => {
-            if(results[0][i][0] == -1){
-                console.log("do nothing")
-
-                bars[results[1][i][0]].style.backgroundColor = "blue";
-                bars[results[1][i][1]].style.backgroundColor = "blue";
-            }
-            else{
-                console.log(results[0][i][0])
-                temp = bars[results[0][i][0]].style.height
-                bars[results[0][i][0]].style.height = bars[results[0][i][1]].style.height
-                bars[results[0][i][1]].style.height = temp
-
-                bars[results[1][i][0]].style.backgroundColor = "blue";
-                bars[results[1][i][1]].style.backgroundColor = "blue";
-            }
-        }, (i+1)*10);
-    }
 
     render() {
         const {array} = this.state;
 
         return (
-            <div className={styles.arrayContainer}>
-                <button onClick={() => this.resetArray()}>Generate New Array</button>
-                {array.map((value, idx) => (
-                    <div 
-                        className={styles.arrayBar} 
-                        key={idx}
-                        style={{height: `${value}px`}}></div>
-                ))}
-                <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
-                <button onClick={() => this.quickSort()}>Quick Sort (not recursive)</button>
-                <button onClick={() => this.selectionSort()}>Selection Sort</button>
-                <button onClick={() => this.insertionSort()}>Insertion Sort</button>
-                <button onClick={() => this.reset()}>Reset</button>
+            <div>
+                <div className={styles.banner}>
+                    <Box sx={{ width: 500 }}>
+                    <Typography id="input-slider" gutterBottom>
+                        Number of bars:
+                    </Typography>
+                        <Slider onChange={this.handleChange} defaultValue={100} step={1} min={20} max={220} disabled={this.state.disabled} aria-labelledby="input-slider" />
+                    </Box>
+
+                    <div>
+                            <Button className={styles.buttonAlgo} variant="contained" onClick={() => this.bubbleSort()} disabled={this.state.disabled}>Bubble Sort</Button>
+                            <Button className={styles.buttonAlgo} variant="contained" onClick={() => this.quickSort()} disabled={this.state.disabled}>Quick Sort (not recursive)</Button>
+                            <Button className={styles.buttonAlgo} variant="contained" onClick={() => this.selectionSort()} disabled={this.state.disabled}>Selection Sort</Button>
+                            <Button className={styles.buttonAlgo} variant="contained" onClick={() => this.insertionSort()} disabled={this.state.disabled}>Insertion Sort (buggy :/)</Button>
+                    </div>
+
+                    <div>
+                        <Button className={styles.buttonNew} variant="contained" onClick={() => this.resetArray()} disabled={this.state.disabled}>Generate New Array</Button>
+                        <Button className={styles.buttonReset} variant="contained" onClick={() => this.reset()}>Stop and Reset</Button>
+                    </div>
+
+                </div>
+
+                <div className={styles.arrayContainer}>
+                
+                    {array.map((value, idx) => (
+                        <div 
+                            className={styles.arrayBar} 
+                            key={idx}
+                            style={{height: `${value}px`}}></div>
+                    ))}
+                
+                </div>
             </div>
       );
     }
@@ -183,4 +198,32 @@ export default class SortingVisualizer extends React.Component {
 
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max-min-1) + min);
+}
+
+function compare(results, bars, i){
+    setTimeout(() => {
+        bars[results[1][i][0]].style.backgroundColor = "red";
+        bars[results[1][i][1]].style.backgroundColor = "red";
+    }, i*3);
+}
+
+function swap(results, bars, i){
+    let temp = 0;
+    setTimeout(() => {
+        if(results[0][i][0] == -1){
+            console.log("do nothing")
+
+            bars[results[1][i][0]].style.backgroundColor = "blue";
+            bars[results[1][i][1]].style.backgroundColor = "blue";
+        }
+        else{
+            console.log(results[0][i][0])
+            temp = bars[results[0][i][0]].style.height
+            bars[results[0][i][0]].style.height = bars[results[0][i][1]].style.height
+            bars[results[0][i][1]].style.height = temp
+
+            bars[results[1][i][0]].style.backgroundColor = "blue";
+            bars[results[1][i][1]].style.backgroundColor = "blue";
+        }
+    }, (i+1)*3);
 }

@@ -1,6 +1,8 @@
 .arrayContainer {
+    display: inline-block;
     position: absolute;
-    left: 100px;
+    bottom: 0px;
+    
 }
 
 .arrayBar{
@@ -8,4 +10,24 @@
     background-color: blue;
     display: inline-block;
     margin: 0 2px;
+    position: relative;
+}
+
+.banner{
+    background-color: lightskyblue;
+    padding: 1rem;
+}
+
+.buttonAlgo{
+    margin: 0 5px 15px;
+}
+
+.buttonNew{
+    margin: 0 5px 15px;
+    background-color: green;
+}
+
+.buttonReset{
+    margin: 0 5px 15px;
+    background-color: red;
 }
