@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import styles from './sortingVisualizer.module.css';
 import * as algo from '../src/sortingAlgorithms.js';
 
-
 export default class SortingVisualizer extends React.Component {
 
     constructor(props){
@@ -69,7 +68,7 @@ export default class SortingVisualizer extends React.Component {
                     bars[results[i][1]].style.backgroundColor = "red";
                 }
                 
-            }, i*10);
+            }, i*5);
     
             setTimeout(() => {
                 if(results[i][2] == 0){
@@ -84,7 +83,7 @@ export default class SortingVisualizer extends React.Component {
                     bars[results[i][0]].style.backgroundColor = "blue";
                     bars[results[i][1]].style.backgroundColor = "blue";
                 }
-            }, (i)*10);
+            }, (i)*5);
         }
     }
 
@@ -99,7 +98,7 @@ export default class SortingVisualizer extends React.Component {
             setTimeout(() => {
                 bars[results[i][0]].style.backgroundColor = "red";
                 bars[results[i][1]].style.backgroundColor = "red";
-            }, i*10);
+            }, i*30);
     
             setTimeout(() => {
                 temp = bars[results[i][0]].style.height
@@ -109,7 +108,7 @@ export default class SortingVisualizer extends React.Component {
                 bars[results[i][0]].style.backgroundColor = "blue";
                 bars[results[i][1]].style.backgroundColor = "blue";
                
-            }, (i+1)*10);
+            }, (i+1)*30);
         }
     }
 
@@ -152,20 +151,23 @@ export default class SortingVisualizer extends React.Component {
                     <Typography id="input-slider" gutterBottom>
                         Number of bars:
                     </Typography>
-                        <Slider onChange={this.handleChange} defaultValue={100} step={1} min={20} max={220} disabled={this.state.disabled} aria-labelledby="input-slider" />
+                        <Slider id="slider" onChange={this.handleChange} defaultValue={100} step={1} min={20} max={220} disabled={this.state.disabled} aria-labelledby="input-slider" />
                     </Box>
 
                     <div>
                             <Button className={styles.buttonAlgo} variant="contained" onClick={() => this.bubbleSort()} disabled={this.state.disabled}>Bubble Sort</Button>
                             <Button className={styles.buttonAlgo} variant="contained" onClick={() => this.quickSort()} disabled={this.state.disabled}>Quick Sort (not recursive)</Button>
                             <Button className={styles.buttonAlgo} variant="contained" onClick={() => this.selectionSort()} disabled={this.state.disabled}>Selection Sort</Button>
-                            <Button className={styles.buttonAlgo} variant="contained" onClick={() => this.insertionSort()} disabled={this.state.disabled}>Insertion Sort (buggy :/)</Button>
+                            <Button className={styles.buttonAlgo} variant="contained" onClick={() => this.insertionSort()} disabled={this.state.disabled}>Insertion Sort</Button>
                     </div>
 
                     <div>
                         <Button className={styles.buttonNew} variant="contained" onClick={() => this.resetArray()} disabled={this.state.disabled}>Generate New Array</Button>
                         <Button className={styles.buttonReset} variant="contained" onClick={() => this.reset()}>Stop and Reset</Button>
                     </div>
+                    <p>
+                        Note: For demo purposes, the speed of the animations are not representative of their Time Complexity
+                    </p>
 
                 </div>
 
@@ -192,7 +194,7 @@ function compare(results, bars, i){
     setTimeout(() => {
         bars[results[1][i][0]].style.backgroundColor = "red";
         bars[results[1][i][1]].style.backgroundColor = "red";
-    }, i*10);
+    }, i*3);
 }
 
 function swap(results, bars, i){
@@ -213,5 +215,5 @@ function swap(results, bars, i){
             bars[results[1][i][0]].style.backgroundColor = "blue";
             bars[results[1][i][1]].style.backgroundColor = "blue";
         }
-    }, (i+1)*10);
+    }, (i+1)*3);
 }
