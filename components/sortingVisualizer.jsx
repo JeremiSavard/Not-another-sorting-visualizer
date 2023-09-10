@@ -155,15 +155,15 @@ export default class SortingVisualizer extends React.Component {
                     </Box>
 
                     <div>
-                            <Button className={styles.buttonAlgo} variant="contained" onClick={() => this.bubbleSort()} disabled={this.state.disabled}>Bubble Sort</Button>
-                            <Button className={styles.buttonAlgo} variant="contained" onClick={() => this.quickSort()} disabled={this.state.disabled}>Quick Sort (not recursive)</Button>
-                            <Button className={styles.buttonAlgo} variant="contained" onClick={() => this.selectionSort()} disabled={this.state.disabled}>Selection Sort</Button>
-                            <Button className={styles.buttonAlgo} variant="contained" onClick={() => this.insertionSort()} disabled={this.state.disabled}>Insertion Sort</Button>
+                            <button className={styles.buttonAlgo}  onClick={() => this.bubbleSort()} disabled={this.state.disabled}>Bubble Sort</button>
+                            <button className={styles.buttonAlgo}  onClick={() => this.quickSort()} disabled={this.state.disabled}>Quick Sort (not recursive)</button>
+                            <button className={styles.buttonAlgo}  onClick={() => this.selectionSort()} disabled={this.state.disabled}>Selection Sort</button>
+                            <button className={styles.buttonAlgo}  onClick={() => this.insertionSort()} disabled={this.state.disabled}>Insertion Sort</button>
                     </div>
 
                     <div>
-                        <Button className={styles.buttonNew} variant="contained" onClick={() => this.resetArray()} disabled={this.state.disabled}>Generate New Array</Button>
-                        <Button className={styles.buttonReset} variant="contained" onClick={() => this.reset()}>Stop and Reset</Button>
+                        <button className={styles.buttonNew}  onClick={() => this.resetArray()} disabled={this.state.disabled}>Generate New Array</button>
+                        <button className={styles.buttonReset}  onClick={() => this.reset()}>Stop and Reset</button>
                     </div>
                     <p>
                         Note: For demo purposes, the speed of the animations are not representative of their Time Complexity

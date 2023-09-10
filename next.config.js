@@ -1,8 +1,14 @@
-const repo = 'Not another sorting visualizer'
-const assetPrefix = `/${repo}/`
-const basePath = `/${repo}/pages`
-
-module.exports = {
-  assetPrefix: assetPrefix,
-  basePath: basePath,
-}
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
+    output: 'export',
+   
+    // Optional: Change the output directory `out` -> `dist`
+    distDir: 'dist',
+    images: {
+        unoptimized: true,
+    }
+  }
+   
+  module.exports = nextConfig

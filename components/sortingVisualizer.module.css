@@ -24,10 +24,12 @@
 
 .buttonNew{
     margin: 0 5px 15px;
-    background-color: green;
+    background-color: #43f14e;
+    border-radius: 5px;
 }
 
 .buttonReset{
     margin: 0 5px 15px;
-    background-color: red;
+    background: #f01616;
+    border-radius: 5px;
 }
